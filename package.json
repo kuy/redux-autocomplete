@@ -1,0 +1,47 @@
+{
+  "name": "redux-autocomplete",
+  "version": "0.0.0",
+  "description": "A React component react-autocomplete for Redux",
+  "main": "./lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kuy/redux-autocomplete.git"
+  },
+  "homepage": "https://github.com/kuy/redux-autocomplete",
+  "bugs": "https://github.com/kuy/redux-autocomplete/issues",
+  "scripts": {
+    "start": "webpack-dev-server --config example/webpack.config.js --host 0.0.0.0 --color --content-base example/",
+    "build": "webpack --config example/webpack.config.js"
+  },
+  "authors": [
+    "Yuki Kodama <endflow.net@gmail.com>",
+    "Ryan Florence <rpflorence@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "redux",
+    "react",
+    "component",
+    "autocomplete",
+    "combobox",
+    "a11y"
+  ],
+  "dependencies": {
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-stage-2": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "dom-scroll-into-view": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-redux": "^4.0.0",
+    "redux": "^3.0.4",
+    "redux-logger": "^2.0.4",
+    "rimraf": "^2.4.3",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.12.1"
+  }
+}
