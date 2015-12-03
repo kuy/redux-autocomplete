@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import autocomplete from '../src/reducer';
 
 function app(state = {}, action) {
   switch (action.type) {
@@ -7,4 +8,6 @@ function app(state = {}, action) {
   }
 }
 
-export default combineReducers({ app });
+export default combineReducers(
+  { app, autocomplete }
+);

@@ -11,7 +11,7 @@
   "bugs": "https://github.com/kuy/redux-autocomplete/issues",
   "scripts": {
     "start": "webpack-dev-server --config example/webpack.config.js --host 0.0.0.0 --color --content-base example/",
-    "build": "webpack --config example/webpack.config.js"
+    "build": "webpack --config example/webpack.config.js --watch"
   },
   "authors": [
     "Yuki Kodama <endflow.net@gmail.com>",
@@ -30,7 +30,8 @@
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-stage-2": "^6.1.18",
     "babel-preset-react": "^6.1.18",
-    "dom-scroll-into-view": "^1.0.1"
+    "dom-scroll-into-view": "^1.0.1",
+    "redux-actions": "^0.8.0"
   },
   "devDependencies": {
     "babel-core": "^6.2.1",
