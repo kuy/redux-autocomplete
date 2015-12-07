@@ -1,6 +1,9 @@
 'use strict';
 
-module.exports = {
+var merge = require('webpack-merge');
+var base = require('./webpack.config.base');
+
+module.exports = merge(base, {
   devtool: 'inline-source-map',
   entry: './example/index.js',
   output: {
@@ -8,11 +11,4 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/build'
   },
-  module: {
-    loaders: [{
-      test: /\.(js)$/,
-      loader:  'babel',
-      exclude: /node_modules/,
-    }],
-  },
-};
+});
