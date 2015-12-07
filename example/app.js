@@ -15,7 +15,7 @@ class App extends Component {
         </p>
 
         <Autocomplete
-          initialItems={getStates()}
+          getItems={getStates}
           getItemValue={(item) => item.name}
           shouldItemRender={matchStateToTerm}
           sortItems={sortStates}

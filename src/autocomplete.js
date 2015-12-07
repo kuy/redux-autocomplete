@@ -17,8 +17,6 @@ class Autocomplete extends Component {
       menuLeft: 0,
       menuWidth: 0,
     };
-
-    props.dispatch(actions.initItems({ items: props.initialItems, fn: this.getFuncSet() }));
   }
 
   componentDidUpdate(prevProps) {
@@ -35,8 +33,8 @@ class Autocomplete extends Component {
   }
 
   getFuncSet() {
-    const { getItemValue, shouldItemRender, sortItems } = this.props;
-    return { getItemValue, shouldItemRender, sortItems };
+    const { getItems, getItemValue, shouldItemRender, sortItems } = this.props;
+    return { getItems, getItemValue, shouldItemRender, sortItems };
   }
 
   maybeScrollItemIntoView () {
@@ -66,16 +64,12 @@ class Autocomplete extends Component {
     }
   }
 
-  getFilteredItems () {
-    return this.props.items.filter(item => !item.hidden);
-  }
-
   maybeAutoCompleteText () {
     var { text, highlightedIndex, getItemValue } = this.props;
     if (text === '') {
       return;
     }
-    var items = this.getFilteredItems();
+    var items = this.props.items;
     if (items.length === 0) {
       return;
     }
@@ -115,7 +109,7 @@ class Autocomplete extends Component {
 
   selectItemFromMouse (item, index) {
     const value = this.props.getItemValue(item);
-    this.props.dispatch(actions.selectItem(index));
+    this.props.dispatch(actions.selectItem({ index, fn: this.getFuncSet() }));
     this.props.onSelect(value, item);
     this.setIgnoreBlur(false);
   }
@@ -125,7 +119,7 @@ class Autocomplete extends Component {
   }
 
   renderMenu () {
-    var items = this.getFilteredItems().map((item, index) => {
+    var items = this.props.items.map((item, index) => {
       var element = this.props.renderItem(
         item,
         this.props.highlightedIndex === index,
@@ -158,12 +152,12 @@ class Autocomplete extends Component {
     if (this._ignoreBlur) {
       return;
     }
-    this.props.dispatch(actions.openList());
+    this.props.dispatch(actions.openList({ fn: this.getFuncSet() }));
   }
 
   handleInputClick () {
     if (this.props.isOpen === false) {
-      this.props.dispatch(actions.openList());
+      this.props.dispatch(actions.openList({ fn: this.getFuncSet() }));
     }
   }
 
@@ -200,7 +194,7 @@ Autocomplete.propTypes = {
   menuStyle: PropTypes.object,
   inputProps: PropTypes.object,
   getItemValue: PropTypes.func,
-  initialItems: PropTypes.array.isRequired,
+  getItems: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
 };
 
@@ -230,7 +224,7 @@ Autocomplete.keyDownHandlers = {
     var { highlightedIndex, dispatch } = this.props;
     var index = (
       highlightedIndex === null ||
-      highlightedIndex === this.getFilteredItems().length - 1
+      highlightedIndex === this.props.items.length - 1
     ) ?  0 : highlightedIndex + 1;
     this._performAutoCompleteOnKeyUp = true;
     dispatch(actions.setHighlight(index));
@@ -242,7 +236,7 @@ Autocomplete.keyDownHandlers = {
     var index = (
       highlightedIndex === 0 ||
       highlightedIndex === null
-    ) ? this.getFilteredItems().length - 1 : highlightedIndex - 1;
+    ) ? this.props.items.length - 1 : highlightedIndex - 1;
     this._performAutoCompleteOnKeyUp = true;
     dispatch(actions.setHighlight(index));
   },
@@ -257,8 +251,8 @@ Autocomplete.keyDownHandlers = {
       dispatch(actions.closeList());
       ReactDOM.findDOMNode(this.refs.input).select();
     } else {
-      var item = this.getFilteredItems()[highlightedIndex];
-      dispatch(actions.selectItem(highlightedIndex));
+      var item = this.props.items[highlightedIndex];
+      dispatch(actions.selectItem({ index: highlightedIndex, fn: this.getFuncSet() }));
       // ReactDOM.findDOMNode(this.refs.input).focus() // TODO: file issue
       ReactDOM.findDOMNode(this.refs.input).setSelectionRange(text.length, text.length);
       onSelect(text, item);
