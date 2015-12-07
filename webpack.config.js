@@ -2,9 +2,11 @@
 
 module.exports = {
   devtool: 'inline-source-map',
-  entry: __dirname + '/index.js',
+  entry: './example/index.js',
   output: {
-    filename: __dirname + '/build/bundle.js'
+    path: __dirname + '/build',
+    filename: 'bundle.js',
+    publicPath: '/build'
   },
   module: {
     loaders: [{

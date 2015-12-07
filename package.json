@@ -10,8 +10,8 @@
   "homepage": "https://github.com/kuy/redux-autocomplete",
   "bugs": "https://github.com/kuy/redux-autocomplete/issues",
   "scripts": {
-    "start": "webpack-dev-server --config example/webpack.config.js --host 0.0.0.0 --color --content-base example/",
-    "build": "webpack --config example/webpack.config.js --watch"
+    "start": "./node_modules/.bin/webpack-dev-server --progress --color --host 0.0.0.0 --content-base example/",
+    "build": "./node_modules/.bin/webpack --progress --watch"
   },
   "authors": [
     "Yuki Kodama <endflow.net@gmail.com>",

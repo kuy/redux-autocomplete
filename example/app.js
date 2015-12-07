@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Basic Example X</h1>
+        <h1>Basic Example</h1>
 
         <p>
           When using static data, you use the client to sort and filter the items,

@@ -41,22 +41,20 @@ class Autocomplete extends Component {
 
   maybeScrollItemIntoView () {
     if (this.props.isOpen === true && this.props.highlightedIndex !== null) {
-      var itemNode = ReactDOM.findDOMNode(this.refs[`item-${this.props.highlightedIndex}`])
-      var menuNode = ReactDOM.findDOMNode(this.refs.menu)
-      scrollIntoView(itemNode, menuNode, { onlyScrollIfNeeded: true })
+      var itemNode = ReactDOM.findDOMNode(this.refs[`item-${this.props.highlightedIndex}`]);
+      var menuNode = ReactDOM.findDOMNode(this.refs.menu);
+      scrollIntoView(itemNode, menuNode, { onlyScrollIfNeeded: true });
     }
   }
 
   handleKeyDown (event) {
     if (Autocomplete.keyDownHandlers[event.key]) {
       Autocomplete.keyDownHandlers[event.key].call(this, event);
-    } else {
-      this.props.dispatch(actions.openList());
     }
   }
 
   handleChange (event) {
-    this._performAutoCompleteOnKeyUp = true
+    this._performAutoCompleteOnKeyUp = true;
     this.props.dispatch(actions.changeText({ text: event.target.value, fn: this.getFuncSet() }));
     this.props.onChange(event, this.props.text);
   }
@@ -92,9 +90,8 @@ class Autocomplete extends Component {
         this.highlightItemFromMouse(matchedItem, 0);
       }
       var node = ReactDOM.findDOMNode(this.refs.input);
-      // TODO: fix text selection
-      // node.value = itemValue;
-      // node.setSelectionRange(text.length, itemValue.length);
+      node.value = itemValue;
+      node.setSelectionRange(text.length, itemValue.length);
     }
   }
 
@@ -270,6 +267,11 @@ Autocomplete.keyDownHandlers = {
 
   Escape: function (event) { // Make 'this' free
     this.props.dispatch(actions.closeList());
+  },
+
+  Backspace: function (event) { // Make 'this' free
+    const node = ReactDOM.findDOMNode(this.refs.input);
+    node.value = this.props.text;
   }
 };
 
