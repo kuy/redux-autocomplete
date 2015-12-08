@@ -2,8 +2,10 @@ import { createAction } from 'redux-actions';
 
 const prefix = (name) => `redux-autocomplete/${name}`;
 
-export const CHANGE_TEXT = prefix('CHANGE_TEXT');
-export const changeText = createAction(CHANGE_TEXT);
+export const SET_TEXT = prefix('SET_TEXT');
+export const CLEAR_TEXT = prefix('CLEAR_LIST');
+export const setText = createAction(SET_TEXT);
+export const clearText = createAction(CLEAR_TEXT);
 
 export const OPEN_LIST = prefix('OPEN_LIST');
 export const CLOSE_LIST = prefix('CLOSE_LIST');

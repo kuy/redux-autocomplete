@@ -1,10 +1,10 @@
 import {
-  CHANGE_TEXT, OPEN_LIST, CLOSE_LIST,
+  SET_TEXT, CLEAR_TEXT, OPEN_LIST, CLOSE_LIST,
   SELECT_ITEM, SET_HIGHLIGHT, CLEAR_HIGHLIGHT
 } from './actions';
 
 const initial = {
-  text: 'Ma',
+  text: '',
   isOpen: false,
   highlightedIndex: null,
   items: [],
@@ -12,7 +12,7 @@ const initial = {
 
 function getViewItems(text, fn) {
   const { getItems, shouldItemRender, sortItems } = fn;
-  let items = getItems();
+  let items = getItems(text);
   if (shouldItemRender) {
     items = items.filter(item => shouldItemRender(item, text));
   }
@@ -23,9 +23,12 @@ function getViewItems(text, fn) {
 }
 
 const handlers = {
-  [CHANGE_TEXT]: function (state, action) {
+  [SET_TEXT]: function (state, action) {
     const { text, fn } = action.payload;
     return { ...state, text, items: getViewItems(text, fn) };
+  },
+  [CLEAR_TEXT]: function (state, action) {
+    return { ...state, text: '' };
   },
   [OPEN_LIST]: function (state, action) {
     const { text } = state;

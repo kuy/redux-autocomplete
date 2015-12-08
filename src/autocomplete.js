@@ -53,8 +53,8 @@ class Autocomplete extends Component {
 
   handleChange (event) {
     this._performAutoCompleteOnKeyUp = true;
-    this.props.dispatch(actions.changeText({ text: event.target.value, fn: this.getFuncSet() }));
-    this.props.onChange(event, this.props.text);
+    this.props.dispatch(actions.setText({ text: event.target.value, fn: this.getFuncSet() }));
+    this.props.onChange(event, event.target.value);
   }
 
   handleKeyUp () {
