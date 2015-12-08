@@ -5,10 +5,13 @@ var base = require('./webpack.config.base');
 
 module.exports = merge(base, {
   devtool: 'inline-source-map',
-  entry: './examples/static-data/index.js',
+  entry: {
+    'static-data': './examples/static-data/index.js',
+    'async-data': './examples/async-data/index.js'
+  },
   output: {
     path: __dirname + '/build',
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     publicPath: '/build'
   },
 });
