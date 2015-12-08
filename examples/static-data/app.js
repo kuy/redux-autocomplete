@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getStates, matchStateToTerm, sortStates, styles } from './utils';
-import { Autocomplete } from '../src/index';
+import { getStates, matchStateToTerm, sortStates, styles } from '../utils';
+import { Autocomplete } from '../../src/index';
 
 class App extends Component {
   render() {

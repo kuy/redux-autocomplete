@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import autocomplete from '../src/reducer';
+import autocomplete from '../../src/reducer';
 
 function app(state = {}, action) {
   switch (action.type) {

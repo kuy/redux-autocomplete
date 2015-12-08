@@ -16,7 +16,6 @@ export let styles = {
   }
 }
 
-
 export function matchStateToTerm (state, value) {
   return (
     state.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
@@ -96,5 +95,3 @@ export function getStates() {
     { abbr: "WY", name: "Wyoming"}
   ]
 }
-
-

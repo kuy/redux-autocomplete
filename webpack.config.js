@@ -5,7 +5,7 @@ var base = require('./webpack.config.base');
 
 module.exports = merge(base, {
   devtool: 'inline-source-map',
-  entry: './example/index.js',
+  entry: './examples/static-data/index.js',
   output: {
     path: __dirname + '/build',
     filename: 'bundle.js',
