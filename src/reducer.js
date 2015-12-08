@@ -1,6 +1,10 @@
 import {
-  SET_TEXT, CLEAR_TEXT, OPEN_LIST, CLOSE_LIST,
-  SELECT_ITEM, SET_HIGHLIGHT, CLEAR_HIGHLIGHT
+  INIT,
+  SET_TEXT, CLEAR_TEXT,
+  OPEN_LIST, CLOSE_LIST,
+  SET_ITEMS, CLEAR_ITEMS,
+  SELECT_ITEM,
+  SET_HIGHLIGHT, CLEAR_HIGHLIGHT
 } from './actions';
 
 const initial = {
@@ -10,9 +14,8 @@ const initial = {
   items: [],
 };
 
-function getViewItems(text, fn) {
-  const { getItems, shouldItemRender, sortItems } = fn;
-  let items = getItems(text);
+function getViewItems(text, props) {
+  let { staticItems: items, shouldItemRender, sortItems } = props;
   if (shouldItemRender) {
     items = items.filter(item => shouldItemRender(item, text));
   }
@@ -23,23 +26,37 @@ function getViewItems(text, fn) {
 }
 
 const handlers = {
+  [INIT]: function (state, action) {
+    const { text } = state;
+    const { props } = action.payload;
+    const items = props.staticItems ? getViewItems(text, props) : state.items;
+    return { ...state, items };
+  },
   [SET_TEXT]: function (state, action) {
-    const { text, fn } = action.payload;
-    return { ...state, text, items: getViewItems(text, fn) };
+    const { text, props } = action.payload;
+    const items = props.staticItems ? getViewItems(text, props) : state.items;
+    return { ...state, text, items };
   },
   [CLEAR_TEXT]: function (state, action) {
     return { ...state, text: '' };
   },
   [OPEN_LIST]: function (state, action) {
     const { text } = state;
-    const { fn } = action.payload;
-    return { ...state, isOpen: true, highlightedIndex: null, items: getViewItems(text, fn) };
+    const { props } = action.payload;
+    const items = props.staticItems ? getViewItems(text, props) : state.items;
+    return { ...state, isOpen: true, highlightedIndex: null, items };
   },
   [CLOSE_LIST]: function (state, action) {
     return { ...state, isOpen: false, highlightedIndex: null };
   },
+  [SET_ITEMS]: function (state, action) {
+    return { ...state, items: action.payload };
+  },
+  [CLEAR_ITEMS]: function (state, action) {
+    return { ...state, items: [] };
+  },
   [SELECT_ITEM]: function (state, action) {
-    const { index, fn: { getItemValue } } = action.payload;
+    const { index, props: { getItemValue } } = action.payload;
     const item = state.items[index];
     return { ...state,
       isOpen: false, highlightedIndex: null, text: getItemValue(item)

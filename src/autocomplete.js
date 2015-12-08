@@ -19,6 +19,10 @@ class Autocomplete extends Component {
     };
   }
 
+  componentWillMount() {
+    this.props.dispatch(actions.init({ props: this.exportProps() }));
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.isOpen === true && prevProps.isOpen === false) {
       this.setMenuPositions();
@@ -32,9 +36,9 @@ class Autocomplete extends Component {
     this.maybeScrollItemIntoView();
   }
 
-  getFuncSet() {
-    const { getItems, getItemValue, shouldItemRender, sortItems } = this.props;
-    return { getItems, getItemValue, shouldItemRender, sortItems };
+  exportProps() {
+    const { staticItems, getItemValue, shouldItemRender, sortItems } = this.props;
+    return { staticItems, getItemValue, shouldItemRender, sortItems };
   }
 
   maybeScrollItemIntoView () {
@@ -53,7 +57,7 @@ class Autocomplete extends Component {
 
   handleChange (event) {
     this._performAutoCompleteOnKeyUp = true;
-    this.props.dispatch(actions.setText({ text: event.target.value, fn: this.getFuncSet() }));
+    this.props.dispatch(actions.setText({ text: event.target.value, props: this.exportProps() }));
     this.props.onChange(event, event.target.value);
   }
 
@@ -109,7 +113,7 @@ class Autocomplete extends Component {
 
   selectItemFromMouse (item, index) {
     const value = this.props.getItemValue(item);
-    this.props.dispatch(actions.selectItem({ index, fn: this.getFuncSet() }));
+    this.props.dispatch(actions.selectItem({ index, props: this.exportProps() }));
     this.props.onSelect(value, item);
     this.setIgnoreBlur(false);
   }
@@ -152,12 +156,12 @@ class Autocomplete extends Component {
     if (this._ignoreBlur) {
       return;
     }
-    this.props.dispatch(actions.openList({ fn: this.getFuncSet() }));
+    this.props.dispatch(actions.openList({ props: this.exportProps() }));
   }
 
   handleInputClick () {
     if (this.props.isOpen === false) {
-      this.props.dispatch(actions.openList({ fn: this.getFuncSet() }));
+      this.props.dispatch(actions.openList({ props: this.exportProps() }));
     }
   }
 
@@ -194,8 +198,8 @@ Autocomplete.propTypes = {
   menuStyle: PropTypes.object,
   inputProps: PropTypes.object,
   getItemValue: PropTypes.func,
-  getItems: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
+  staticItems: PropTypes.array,
 };
 
 Autocomplete.defaultProps = {
@@ -252,7 +256,7 @@ Autocomplete.keyDownHandlers = {
       ReactDOM.findDOMNode(this.refs.input).select();
     } else {
       var item = this.props.items[highlightedIndex];
-      dispatch(actions.selectItem({ index: highlightedIndex, fn: this.getFuncSet() }));
+      dispatch(actions.selectItem({ index: highlightedIndex, props: this.exportProps() }));
       // ReactDOM.findDOMNode(this.refs.input).focus() // TODO: file issue
       ReactDOM.findDOMNode(this.refs.input).setSelectionRange(text.length, text.length);
       onSelect(text, item);
