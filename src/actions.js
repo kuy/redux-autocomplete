@@ -15,6 +15,11 @@ export const CLOSE_LIST = prefix('CLOSE_LIST');
 export const openList = createAction(OPEN_LIST);
 export const closeList = createAction(CLOSE_LIST);
 
+export const SET_ITEMS = prefix('SET_ITEMS');
+export const CLEAR_ITEMS = prefix('CLEAR_ITEMS');
+export const setItems = createAction(SET_ITEMS);
+export const clearItems = createAction(CLEAR_ITEMS);
+
 export const SELECT_ITEM = prefix('SELECT_ITEM');
 export const selectItem = createAction(SELECT_ITEM);
 

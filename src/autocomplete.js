@@ -188,18 +188,21 @@ class Autocomplete extends Component {
 }
 
 Autocomplete.propTypes = {
+  // Props from state tree
   text: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   highlightedIndex: PropTypes.number,
+  items: PropTypes.array.isRequired,
+
+  // Props from wrapper props
+  renderItem: PropTypes.func.isRequired,
+  getItemValue: PropTypes.func.isRequired,
+  inputProps: PropTypes.object,
+  staticItems: PropTypes.array,
   onChange: PropTypes.func,
   onSelect: PropTypes.func,
   shouldItemRender: PropTypes.func,
-  renderItem: PropTypes.func.isRequired,
   menuStyle: PropTypes.object,
-  inputProps: PropTypes.object,
-  getItemValue: PropTypes.func,
-  items: PropTypes.array.isRequired,
-  staticItems: PropTypes.array,
 };
 
 Autocomplete.defaultProps = {
