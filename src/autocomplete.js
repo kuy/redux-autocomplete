@@ -112,14 +112,16 @@ class Autocomplete extends Component {
   }
 
   selectItemFromMouse (item, index) {
-    const value = this.props.getItemValue(item);
-    this.props.dispatch(actions.selectItem({ index, props: this.exportProps() }));
-    this.props.onSelect(value, item);
+    const { onSelect, getItemValue, dispatch } = this.props;
+    const value = getItemValue(item);
+    dispatch(actions.selectItem({ index, props: this.exportProps() }));
+    dispatch(actions.clearItems());
+    onSelect(value, item);
     this.setIgnoreBlur(false);
   }
 
   setIgnoreBlur (ignore) {
-    this._ignoreBlur = ignore
+    this._ignoreBlur = ignore;
   }
 
   renderMenu () {
