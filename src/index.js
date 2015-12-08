@@ -1,5 +1,3 @@
-import Autocomplete from './autocomplete';
-import reducer from './reducer';
-import actions from './actions';
-
-export default { Autocomplete, reducer, actions };
+export { default as Autocomplete } from './autocomplete';
+export { default as reducer } from './reducer';
+export { default as actions } from './actions';

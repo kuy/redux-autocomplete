@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getStates, matchStateToTerm, sortStates, styles } from './utils';
-import Autocomplete from '../src/autocomplete';
+import { Autocomplete } from '../src/index';
 
 class App extends Component {
   render() {
@@ -16,7 +16,7 @@ class App extends Component {
 
         <Autocomplete
           getItems={getStates}
-          getItemValue={(item) => item.name}
+          getItemValue={item => item.name}
           shouldItemRender={matchStateToTerm}
           sortItems={sortStates}
           renderItem={(item, isHighlighted) => (
