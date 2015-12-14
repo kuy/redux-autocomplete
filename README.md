@@ -1,4 +1,6 @@
-# **UNDERDEVELOPMENT** redux-autocomplete
+# NOTICE: UNDERDEVELOPMENT
+
+# redux-autocomplete
 
 A React component `react-autocomplete` for Redux.
 
@@ -20,3 +22,6 @@ npm run build
 ```
 npm start
 ```
+
+Open `http://localhost:8080/webpack-dev-server/static-data/` for auto-reloading.
+If you want to debug with React Dev Tools, `http://localhost:8080/static-data/` will be preferred.

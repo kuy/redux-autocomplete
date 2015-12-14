@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+
 import {
   INIT,
   SET_TEXT, CLEAR_TEXT,
@@ -15,11 +17,29 @@ const initial = {
 };
 
 function getViewItems(text, props) {
-  let { staticItems: items, shouldItemRender, sortItems } = props;
+  let { staticItems: items, shouldItemRender, sortItems, sortGroups } = props;
   if (shouldItemRender) {
     items = items.filter(item => shouldItemRender(item, text));
   }
-  if (sortItems) {
+  if (sortGroups) {
+    const groups = {};
+    items.forEach(item => {
+      let group = groups[item.group];
+      if (!group) {
+        group = groups[item.group] = [];
+      }
+      group.push(item);
+    });
+
+    const groupNames = Object.keys(groups);
+    groupNames.sort(sortGroups);
+
+    items = groupNames.map(name => groups[name]).reduce((list, unsorted) => {
+      const items = unsorted.slice(0);
+      sortItems && items.sort((a, b) => sortItems(a, b, text));
+      return list.concat(items);
+    }, []);
+  } else if (sortItems) {
     items.sort((a, b) => sortItems(a, b, text));
   }
   return items;

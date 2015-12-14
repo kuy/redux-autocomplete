@@ -37,8 +37,8 @@ class Autocomplete extends Component {
   }
 
   exportProps() {
-    const { staticItems, getItemValue, shouldItemRender, sortItems } = this.props;
-    return { staticItems, getItemValue, shouldItemRender, sortItems };
+    const { staticItems, getItemValue, shouldItemRender, sortItems, sortGroups } = this.props;
+    return { staticItems, getItemValue, shouldItemRender, sortItems, sortGroups };
   }
 
   maybeScrollItemIntoView () {
@@ -125,19 +125,25 @@ class Autocomplete extends Component {
   }
 
   renderMenu () {
+    let group;
     var items = this.props.items.map((item, index) => {
       var element = this.props.renderItem(
         item,
         this.props.highlightedIndex === index,
-        {cursor: 'default'}
-      )
-      return React.cloneElement(element, {
+        { cursor: 'default' }
+      );
+      let header;
+      if (item.group && group !== item.group) {
+        header = <div style={this.props.headerStyle}>{item.group}</div>;
+        group = item.group;
+      }
+      return [header, React.cloneElement(element, {
         onMouseDown: () => this.setIgnoreBlur(true),
         onMouseEnter: () => this.highlightItemFromMouse(item, index),
         onClick: () => this.selectItemFromMouse(item, index),
         ref: `item-${index}`,
-      });
-    });
+      })];
+    }).reduce((list, ary) => list.concat(ary.filter(i => !!i)), []);
     var style = {
       left: this.state.menuLeft,
       top: this.state.menuTop,
@@ -204,7 +210,10 @@ Autocomplete.propTypes = {
   onChange: PropTypes.func,
   onSelect: PropTypes.func,
   shouldItemRender: PropTypes.func,
+  sortItems: PropTypes.func,
+  sortGroups: PropTypes.func,
   menuStyle: PropTypes.object,
+  headerStyle: PropTypes.object,
 };
 
 Autocomplete.defaultProps = {
@@ -224,6 +233,11 @@ Autocomplete.defaultProps = {
     position: 'fixed',
     overflow: 'auto',
     maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
+  },
+  headerStyle: {
+    padding: '2px 6px',
+    fontSize: '1.2em',
+    backgroundColor: '#ddd',
   }
 };
 
