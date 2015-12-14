@@ -1,6 +1,6 @@
 {
   "name": "redux-autocomplete",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A React component react-autocomplete for Redux",
   "main": "./lib/index.js",
   "repository": {
