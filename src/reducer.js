@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
 import {
   INIT,
   SET_TEXT, CLEAR_TEXT,
