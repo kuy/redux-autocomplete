@@ -45,7 +45,7 @@ class Autocomplete extends Component {
     if (this.props.isOpen === true && this.props.highlightedIndex !== null) {
       var itemNode = ReactDOM.findDOMNode(this.refs[`item-${this.props.highlightedIndex}`]);
       var menuNode = ReactDOM.findDOMNode(this.refs.menu);
-      scrollIntoView(itemNode, menuNode, { onlyScrollIfNeeded: true });
+      itemNode && scrollIntoView(itemNode, menuNode, { onlyScrollIfNeeded: true });
     }
   }
 
